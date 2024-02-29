@@ -3,9 +3,7 @@ package pt.leirt.mpd;
 import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import pt.leirt.mpd.products.Electronics;
-import pt.leirt.mpd.products.Speaker;
-import pt.leirt.mpd.products.TV;
+import pt.leirt.mpd.products.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -28,7 +26,7 @@ public class Store {
 
     public Iterable<Electronics> fromSamsung() {
         List<Electronics> samsungProds = new ArrayList<>();
-        var samsungProds1 = new ArrayList<Electronics>();
+        //var samsungProds1 = new ArrayList<Electronics>();
 
         for(var p : catalog) {
             if (p.getBrand().equalsIgnoreCase("Samsung"))
@@ -37,12 +35,12 @@ public class Store {
         return samsungProds;
     }
 
-    public Iterable<TV> getAbove65Inches() {
+    public Iterable<TV> getAboveSizeTvs(double minInches) {
         // TO IMPLEMENT
         return null;
     }
 
-    public Iterable<Speaker> getSpeakersInPowerInterval() {
+    public Iterable<Speaker> getSpeakersInPowerInterval(int minPower, int maxPower) {
         // TO IMPLEMENT
         return null;
     }
@@ -52,9 +50,29 @@ public class Store {
         return null;
     }
 
+    public Electronics getMostExpensiveIndividualProductInPacks() {
+        // TO IMPLEMENT
+        return null;
+    }
 
+    static class DisplaySummary {
+        // TO Define , must include product name and brand and display characteristics
+    }
 
+    public Iterable<DisplaySummary> getDisplaysSummary() {
+        // TO IMPLEMENT
+        return null;
+    }
 
+    public SmartPhone getCheapestSmartPhoneWithBatteryGreaterThen(int minBatCapacity) {
+        // TO IMPLEMENT
+        return null;
+    }
+
+    public Iterable<Promo> getPromoTVsWith20PercentDiscount() {
+        // TO IMPLEMENT
+        return null;
+    }
 
 
 }

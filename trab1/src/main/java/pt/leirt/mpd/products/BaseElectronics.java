@@ -25,7 +25,7 @@ public abstract class BaseElectronics implements Electronics {
 
 
         public String toString() {
-                String s = String.format("%s %s: price %.2f€",brand, name,price);
+                String s = String.format("%s %s: price %.2f euros",brand, name,price);
                 return s;
         }
 

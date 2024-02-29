@@ -26,12 +26,5 @@ public class TV extends BaseElectronics {
         return screenSize;
     }
 
-    @Override
-    public void saveToJson(JSONArray json) {
-        JSONObject tv = getJsonBase();
 
-        tv.put("resolution", res.getJson());
-        tv.put("size", screenSize);
-        json.put(tv);
-    }
 }

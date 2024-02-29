@@ -14,8 +14,7 @@ public interface Electronics {
 
     String getName();               // get  product name
     double getPrice();              // get  product price
-    Category getCategory();     // get  product category
+    Category getCategory();         // get  product category
     String getBrand();              // get  product brand
 
-    void saveToJson(JSONArray json);
 }
