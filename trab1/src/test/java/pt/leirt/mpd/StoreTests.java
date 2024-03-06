@@ -11,53 +11,110 @@ import java.io.StringWriter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static pt.leirt.mpd.TestUtils.count;
 
 public class StoreTests {
   private final static Store store = new Store();
-  private final static Resolution hd = new Resolution(1024, 768);
-  private final static Resolution fullHd = new Resolution(1920, 1080);
-  private final static Resolution uhd = new Resolution(3840, 2160);
-
+  
+  // Store catalog
   static {
-
-    store.addCatalog(new TV("X95", "Sony", 3000, uhd, 65.0))
-        .addCatalog(new Speaker("x300", "JBL", 100, 40))
-        .addCatalog(new Speaker("s250", "Samsung", 200, 60));
-
+    store.addCatalog(StoreDB.sonyX95)
+         .addCatalog(StoreDB.samsungU7)
+         //.addCatalog(StoreDB.packBig)
+         .addCatalog(StoreDB.jblX300)
+         .addCatalog(StoreDB.samsungS250);
+         //.addCatalog(StoreDB.iPhone15)
+         //.addCatalog(StoreDB.samsungS23)
+         //.addCatalog(StoreDB.packSamsung)
+         //.addCatalog(StoreDB.packTvs);
   }
-
-  private static <T> long count(Iterable<T> src) {
-      long c = 0;
-
-      for(var t : src ) c++;
-      return c;
-  }
-
+  
   @Test
-  public void getCatalogInJson() throws IOException {
-    // To complete
-  }
-
-  @Test
-  public void productsFromSansungTests() {
+  public void productsFromSamsungTests() {
     List<Electronics> expected =
-        List.of(new Speaker("s250", "Samsung", 200, 60));
-
+        List.of(new TV("u7", "Samsung", 2000, StoreDB.uhd, 60),
+            new Speaker("s250", "Samsung", 200, 60));
+    
     Iterable<Electronics> result = store.fromSamsung() ;
-
+    
     System.out.println(result);
     assertEquals(expected.size(), count(result));
     assertEquals(expected, result);
   }
-
+  
   @Test
-  public void getAbove50InchesTvsTest() {
-    List<TV> expected = List.of(new TV("X95", "Sony", 3000, uhd, 65.0));
-
-    Iterable<TV> result = store.getAboveSizeTvs(50) ;
-
+  public void getAbove60InchesTvsTest() {
+    List<TV> expected =
+        List.of(new TV("X95", "Sony", 3000, StoreDB.uhd, 65.0));
+    
+    Iterable<TV> result = store.getAboveSizeTvs(64) ;
+    
     System.out.println(result);
-
+    
+    assertEquals(expected.size(), count(result));
     assertEquals(expected, result);
+  }
+  
+  @Test
+  public void getSpeakersBetween40And50WattsTest() {
+    List<Speaker> expected = List.of(StoreDB.jblX300);
+    var result = store.getSpeakersInPowerInterval(40,50);
+    var expectedCount = expected.size();
+    assertEquals(expectedCount, count(result));
+    assertEquals(expected, result);
+  }
+  
+  /*
+  @Test
+  public void getMostExpensiveCommunicationDeviceTest() {
+    var expected = StoreDB.iPhone15;
+    var result = store.getMostExpensiveCommunicationDevice();
+    assertNotNull(result);
+    assertEquals(expected, result);
+  }
+  */
+  
+  
+  /*
+  @Test
+  public void getAllIndividualProductsInPackTest() {
+    int count = 0;
+    for(var p : StoreDB.packBig) {
+      System.out.println(p);
+      count++;
+    }
+    var expected = 7; // packBig as 7 individual products
+    assertEquals(expected, count);
+  }
+  */
+  
+  @Test
+  public void getIndividualDispalysCountInCatalogTest() {
+    var expectedCount=4;
+    assertEquals(expectedCount, count(store.getDisplaysSummary()));
+  }
+  
+  @Test
+  public void getMostExpensiveProductInPack() {
+    var expected = StoreDB.sonyX95;
+    assertEquals(expected, store.getMostExpensiveIndividualProductInPacks());
+  }
+  
+
+  /*
+  @Test
+  public void getCheapestSmartPhoneWithBatteryGreaterThen2000mAh() {
+    var expectedPhone = StoreDB.samsungS23;
+    var result = store.getCheapestSmartPhoneWithBatteryGreaterThen(2000);
+    assertEquals(expectedPhone, result);
+    System.out.println(result);
+  }
+  */
+  
+  @Test
+  public void getPromoTVsWith20PercentDiscountTest() {
+    var result = store.getPromoTVsWith20PercentDiscount();
+    assertEquals(0, count(result) );
   }
 }
