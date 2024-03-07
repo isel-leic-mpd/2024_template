@@ -1,15 +1,8 @@
 package pt.leirt.mpd;
 
-import org.junit.jupiter.api.Test;
-import pt.leirt.mpd.products.Pack;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static pt.leirt.mpd.TestUtils.count;
-import static pt.leirt.mpd.TestUtils.toList;
 
-public class PckTests {
+public class PackTests {
     /*
     @Test
     public void checkAttributtesOfPackSamsungTest() {
